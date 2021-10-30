@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">anchor_book</string>
+    <string name="nombre">Titulo</string>
+    <string name="detalle">Detalle</string>
+    <string name="titulo">Listado de Libros</string>
+    <string name="id">ID:1000</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
