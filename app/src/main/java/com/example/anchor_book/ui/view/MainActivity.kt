@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.anchor_book.R
 import com.example.anchor_book.databinding.ActivityMainBinding
 import com.example.anchor_book.ui.view.adapter.CustomAdapter
+import com.example.anchor_book.ui.view.fragments.BookDetailFragment
 import com.example.anchor_book.ui.view.fragments.BooksFragment
 import com.example.anchor_book.ui.view.interfaces.IcomunicateBook
 import com.example.anchor_book.ui.viewmodel.BookViewModel
@@ -60,7 +61,8 @@ class MainActivity : AppCompatActivity(), IcomunicateBook {
         replaceFragment(BooksFragment())
     }
 
-    override fun viewBookDetail(id_book: Int) {
-        //replaceFragment(AlumnosNotasFragment())
+    override fun viewBookDetail() {
+
+        replaceFragment(BookDetailFragment())
     }
 }

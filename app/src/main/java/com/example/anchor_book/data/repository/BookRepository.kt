@@ -44,34 +44,36 @@ class BookRepository {
 
     }.flowOn(Dispatchers.IO)
 
-    suspend fun getOnBooks(id:Int): Book? {
 
 
-        val booksResponse = kotlin.runCatching { bookService.getOneBook(id) }
-        //val book = Book(id)
+     fun getOneBook(id:Int): Flow<Book> = flow{
 
-        booksResponse.onSuccess {
-            if(it.body()!=null)
-            {
-                Log.d("Json_unique_book", it.body().toString())
-                db.bookDao().insertOneBook(BooksConversor.convertOneBookEntity(it.body()!!))
+        while(true) {
+            val booksResponse = kotlin.runCatching { bookService.getOneBook(id) }
+            //val book = Book(id)
+
+            booksResponse.onSuccess {
+                if (it.body() != null) {
+                    Log.d("libro_selec", it.body().toString())
+                    db.bookDao().insertOneBook(BooksConversor.convertOneBookEntity(it.body()!!))
+
+                }
+            }
+
+            booksResponse.onFailure {
+                Log.d("Error_unique_book", it.toString())
 
             }
+
+            val BookEntity: BookEntity = db.bookDao().getOneBook(id)
+
+            if (BookEntity != null) {
+                emit(BooksConversor.convertOneBook(BookEntity))
+            }
+            kotlinx.coroutines.delay(5000)
         }
 
-        booksResponse.onFailure {
-            Log.d("Error_unique_book", it.toString())
-
-        }
-
-        val BooksEntity:BookEntity =  db.bookDao().getOneBook(id)
-
-        if(BooksEntity!=null){
-            return BooksConversor.convertOneBook(BooksEntity)
-        }
-
-        return null
-    }
+    }.flowOn(Dispatchers.IO)
 
 
 

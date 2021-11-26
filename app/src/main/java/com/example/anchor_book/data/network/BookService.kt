@@ -18,7 +18,7 @@ class BookService {
     }
     suspend fun getOneBook(id:Int): Response<Book> {
         return withContext(Dispatchers.IO){
-            retrofit.create(ApiServices::class.java).getBook(id.toString())
+            retrofit.create(ApiServices::class.java).getBook(id)
         }
     }
 }

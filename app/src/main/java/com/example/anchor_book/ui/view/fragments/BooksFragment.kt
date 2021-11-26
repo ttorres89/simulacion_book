@@ -2,7 +2,6 @@ package com.example.anchor_book.ui.view.fragments
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,9 +11,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.anchor_book.R
+import com.example.anchor_book.data.db.config.Anchor_book_app.Companion.prefs
 import com.example.anchor_book.databinding.FragmentBooksBinding
-import com.example.anchor_book.ui.view.Visor_detalle
 import com.example.anchor_book.ui.view.adapter.CustomAdapter
 import com.example.anchor_book.ui.view.interfaces.IcomunicateBook
 import com.example.anchor_book.ui.viewmodel.BookViewModel
@@ -70,13 +68,17 @@ class BooksFragment : Fragment() {
 
             Log.d("books_observe",it.toString())
             adapter = CustomAdapter(it, requireContext())
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerView.adapter=adapter
+            binding.recyclerBooks.layoutManager = LinearLayoutManager(requireContext())
+            binding.recyclerBooks.adapter=adapter
 
             adapter.setOnClickListener(object: View.OnClickListener {
                 override fun onClick(v: View?) {
-                     val id_book:Int = it.get(binding.recyclerView.getChildAdapterPosition(v!!)).id
-                    icomunicateBook.viewBookDetail(id_book)
+                     val id_book:Int = it.get(binding.recyclerBooks.getChildAdapterPosition(v!!)).id
+
+                    prefs.idBook = id_book
+
+                    Log.d("id", id_book.toString())
+                    icomunicateBook.viewBookDetail()
                 }
             }
             )
